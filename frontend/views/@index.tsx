@@ -15,7 +15,7 @@ export default function Index() {
   const [bookings, setBookings] = useState<BookingDetails[]>([]);
   const [messages, setMessages] = useState<MessageItem[]>([{
     role: 'assistant',
-    content: 'Welcome to Funnair! How can I help you?'
+    content: '欢迎您莅临光哥航空! 有什么可以效劳的么?'
   }]);
 
   useEffect(() => {
@@ -64,23 +64,22 @@ export default function Index() {
   return (
     <SplitLayout className="h-full">
       <div className="flex flex-col gap-m p-m box-border h-full" style={{width: '30%'}}>
-        <h3>Funnair support</h3>
-        <MessageList messages={messages} className="flex-grow overflow-scroll"/>
-        <MessageInput onSubmit={e => sendMessage(e.detail.value)} className="px-0" disabled={working}/>
+        <h3>光哥航空</h3>
+        <MessageList messages={messages} className="flex-grow overflow-scroll msgp"/>
+        <MessageInput onSubmit={e => sendMessage(e.detail.value)}  className="px-0" disabled={working} />
       </div>
       <div className="flex flex-col gap-m p-m box-border" style={{width: '70%'}}>
-        <h3>Bookings database</h3>
+        <h3>订单信息</h3>
         <Grid items={bookings} className="flex-shrink-0">
-          <GridColumn path="bookingNumber" autoWidth header="#"/>
-          <GridColumn path="firstName" autoWidth/>
-          <GridColumn path="lastName" autoWidth/>
-          <GridColumn path="date" autoWidth/>
-          <GridColumn path="from" autoWidth/>
-          <GridColumn path="to" autoWidth/>
-          <GridColumn path="bookingStatus" autoWidth header="Status">
+          <GridColumn path="bookingNumber" header="订单号" autoWidth/>
+          <GridColumn path="name" header="姓名" autoWidth/>
+          <GridColumn path="date" header="出发日期" autoWidth/>
+          <GridColumn path="from" header="出发地" autoWidth/>
+          <GridColumn path="to" header="目的地" autoWidth/>
+          <GridColumn path="bookingStatus" header="订单状态" autoWidth >
             {({item}) => item.bookingStatus === "CONFIRMED" ? "✅" : "❌"}
           </GridColumn>
-          <GridColumn path="bookingClass" autoWidth/>
+          <GridColumn path="bookingClass" header="机舱等级" autoWidth/>
         </Grid>
       </div>
     </SplitLayout>

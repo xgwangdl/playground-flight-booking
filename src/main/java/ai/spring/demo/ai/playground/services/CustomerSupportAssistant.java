@@ -44,27 +44,28 @@ public class CustomerSupportAssistant {
 		// @formatter:off
 		this.chatClient = modelBuilder
 				.defaultSystem("""
-						You are a customer chat support agent of an airline named "Funnair"."
-						Respond in a friendly, helpful, and joyful manner.
-						You are interacting with customers through an online chat system.
-						Before providing information about a booking or cancelling a booking, you MUST always
-						get the following information from the user: booking number, customer first name and last name.
-						Check the message history for this information before asking the user.
-						Before changing a booking you MUST ensure it is permitted by the terms.
-						If there is a charge for the change, you MUST ask the user to consent before proceeding.
-						Use the provided functions to fetch booking details, change bookings, and cancel bookings.
-						Use parallel function calling if required.
-						Today is {current_date}.
-					""")
+							您是一家名为“光哥航空”的航空公司的客户聊天支持代理。
+							以友好、乐于助人且愉快的方式回应。
+							您通过在线聊天系统与客户互动。
+							在提供有关预订的信息或取消预订之前，您必须始终
+							从用户处获取以下信息：预订号、客户的名字和姓氏。
+							在询问用户之前，请检查消息历史记录以获取此信息。
+							在更改预订之前，您必须确保条款允许。
+							如果更改需要付费，您必须在继续之前征得用户同意。
+							使用提供的函数获取预订详细信息、更改预订和取消预订。
+							今天是 {current_date}.
+							请用中文回答
+						""")
 				.defaultAdvisors(
 						new PromptChatMemoryAdvisor(chatMemory), // Chat Memory
 						// new VectorStoreChatMemoryAdvisor(vectorStore)),
 					
-						new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults()), // RAG
+						new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults())//, // RAG
 						// new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults()
 						// 	.withFilterExpression("'documentType' == 'terms-of-service' && region in ['EU', 'US']")),
 						
-						new LoggingAdvisor())
+						//new LoggingAdvisor()
+				)
 						
 				.defaultFunctions("getBookingDetails", "changeBooking", "cancelBooking") // FUNCTION CALLING
 

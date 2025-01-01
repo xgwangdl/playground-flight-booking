@@ -22,23 +22,20 @@ public class FlightBookingService {
     }
 
     private void initDemoData() {
-        List<String> firstNames = List.of("John", "Jane", "Michael", "Sarah", "Robert");
-        List<String> lastNames = List.of("Doe", "Smith", "Johnson", "Williams", "Taylor");
-        List<String> airportCodes = List.of("LAX", "SFO", "JFK", "LHR", "CDG", "ARN", "HEL", "TXL", "MUC", "FRA", "MAD", "FUN", "SJC");
+        List<String> firstNames = List.of("张三", "李四", "Lucas", "光哥", "Robert","栋哥","皮带哥");
+        List<String> airportCodes = List.of("洛杉矶", "旧金山", "纽约", "大庆", "深圳", "三亚", "广州", "北京", "郑州", "上海", "哈尔滨", "南京", "杭州", "大连");
         Random random = new Random();
 
         var customers = new ArrayList<Customer>();
         var bookings = new ArrayList<Booking>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < firstNames.size(); i++) {
             String firstName = firstNames.get(i);
-            String lastName = lastNames.get(i);
             String from = airportCodes.get(random.nextInt(airportCodes.size()));
             String to = airportCodes.get(random.nextInt(airportCodes.size()));
             BookingClass bookingClass = BookingClass.values()[random.nextInt(BookingClass.values().length)];
             Customer customer = new Customer();
-            customer.setFirstName(firstName);
-            customer.setLastName(lastName);
+            customer.setName(firstName);
 
             LocalDate date = LocalDate.now().plusDays(2*i);
 
@@ -58,22 +55,21 @@ public class FlightBookingService {
         return db.getBookings().stream().map(this::toBookingDetails).toList();
     }
 
-    private Booking findBooking(String bookingNumber, String firstName, String lastName) {
+    private Booking findBooking(String bookingNumber, String name) {
         return db.getBookings().stream()
                 .filter(b -> b.getBookingNumber().equalsIgnoreCase(bookingNumber))
-                .filter(b -> b.getCustomer().getFirstName().equalsIgnoreCase(firstName))
-                .filter(b -> b.getCustomer().getLastName().equalsIgnoreCase(lastName))
+                .filter(b -> b.getCustomer().getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
     }
 
-    public BookingDetails getBookingDetails(String bookingNumber, String firstName, String lastName) {
-        var booking = findBooking(bookingNumber, firstName, lastName);
+    public BookingDetails getBookingDetails(String bookingNumber, String firstName) {
+        var booking = findBooking(bookingNumber, firstName);
         return toBookingDetails(booking);
     }
 
-    public void changeBooking(String bookingNumber, String firstName, String lastName, String newDate, String from, String to) {
-        var booking = findBooking(bookingNumber, firstName, lastName);
+    public void changeBooking(String bookingNumber, String name, String newDate, String from, String to) {
+        var booking = findBooking(bookingNumber, name);
         if(booking.getDate().isBefore(LocalDate.now().plusDays(1))){
             throw new IllegalArgumentException("Booking cannot be changed within 24 hours of the start date.");
         }
@@ -82,8 +78,8 @@ public class FlightBookingService {
         booking.setTo(to);
     }
 
-    public void cancelBooking(String bookingNumber, String firstName, String lastName) {
-        var booking = findBooking(bookingNumber, firstName, lastName);
+    public void cancelBooking(String bookingNumber, String name) {
+        var booking = findBooking(bookingNumber, name);
         if (booking.getDate().isBefore(LocalDate.now().plusDays(2))) {
             throw new IllegalArgumentException("Booking cannot be cancelled within 48 hours of the start date.");
         }
@@ -93,8 +89,7 @@ public class FlightBookingService {
     private BookingDetails toBookingDetails(Booking booking){
         return new BookingDetails(
                 booking.getBookingNumber(),
-                booking.getCustomer().getFirstName(),
-                booking.getCustomer().getLastName(),
+                booking.getCustomer().getName(),
                 booking.getDate(),
                 booking.getBookingStatus(),
                 booking.getFrom(),
