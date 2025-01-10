@@ -1,6 +1,6 @@
 package ai.spring.demo.ai.playground.client;
 
-import ai.spring.demo.ai.playground.javaAssistant.JavaAssistant;
+import ai.spring.demo.ai.playground.javaInterview.JavaAssistant;
 import ai.spring.demo.ai.playground.services.CustomerSupportAssistant;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
@@ -27,4 +27,5 @@ public class AssistantService {
     public Flux<String> interViewChat(String chatId, String userMessage)  {
         return interViewAgent.chat(chatId, userMessage);
     }
+
 }

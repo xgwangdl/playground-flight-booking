@@ -1,8 +1,8 @@
 package ai.spring.demo.ai.playground.client;
 
-import ai.spring.demo.ai.playground.data.InterView;
-import ai.spring.demo.ai.playground.javaAssistant.InterViewTools;
-import ai.spring.demo.ai.playground.services.InterViewService;
+import ai.spring.demo.ai.playground.javaInterview.InterViewTools;
+import ai.spring.demo.ai.playground.javaInterview.InterViewService;
+import ai.spring.demo.ai.playground.mail.MailService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.hilla.BrowserCallable;
 
@@ -16,10 +16,12 @@ import ai.spring.demo.ai.playground.services.FlightBookingService;
 public class BookingService {
     private final FlightBookingService flightBookingService;
     private final InterViewService interViewService;
+    private final MailService mailService;
 
-    public BookingService(FlightBookingService flightBookingService,InterViewService interViewService) {
+    public BookingService(FlightBookingService flightBookingService, InterViewService interViewService, MailService mailService) {
         this.flightBookingService = flightBookingService;
         this.interViewService = interViewService;
+        this.mailService = mailService;
     }
 
     public List<BookingDetails> getBookings() {
@@ -27,4 +29,8 @@ public class BookingService {
     }
 
     public List<InterViewTools.InterViewRecord> getInterView() {return this.interViewService.getInterViews();}
+
+    public void sendMail(String number,String name) {
+        this.mailService.sendMailForAttachment(number,name);
+    }
 }

@@ -66,19 +66,10 @@ export default function InterviewView() {
 
   return (
     <SplitLayout className="h-full">
-      <div className="flex flex-col gap-m p-m box-border h-full" style={{width: '30%'}}>
+      <div className="flex flex-col gap-m p-m box-border h-full" style={{width: '50%'}}>
         <h3>面试题</h3>
-        <MessageList messages={messages} className="flex-grow overflow-scroll msgp"/>
+        <MessageList messages={messages} className="flex-grow overflow-scroll msgp"  />
         <MessageInput onSubmit={e => sendMessage(e.detail.value)}  className="px-0" disabled={working} />
-      </div>
-      <div className="flex flex-col gap-m p-m box-border" style={{width: '70%'}}>
-        <h3>候选者名单</h3>
-        <Grid items={interViews} className="flex-shrink-0">
-          <GridColumn path="number" header="序号" autoWidth/>
-          <GridColumn path="name" header="姓名" autoWidth/>
-          <GridColumn path="score" header="得分" autoWidth/>
-          <GridColumn path="interViewStatus" header="评价" autoWidth/>
-        </Grid>
       </div>
     </SplitLayout>
 

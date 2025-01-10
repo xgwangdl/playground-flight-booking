@@ -19,6 +19,8 @@ import org.springframework.core.io.Resource;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 
+import java.io.File;
+
 @SpringBootApplication
 @Theme(value = "customer-support-agent")
 public class Application implements AppShellConfigurator {
@@ -31,7 +33,7 @@ public class Application implements AppShellConfigurator {
 
 	// In the real world, ingesting documents would often happen separately, on a CI
 	// server or similar.
-	@Bean
+	/*@Bean
 	CommandLineRunner ingestTermOfServiceToVectorStore(
 			EmbeddingModel embeddingModel, VectorStore vectorStore,
 			@Value("classpath:rag/terms-of-service.txt") Resource termsOfServiceDocs) {
@@ -46,7 +48,7 @@ public class Application implements AppShellConfigurator {
 				logger.info("Similar Document: {}", doc.getContent());
 			});
 		};
-	}
+	}*/
 
 	@Bean
 	public VectorStore vectorStore(EmbeddingModel embeddingModel) {

@@ -138,7 +138,18 @@
 			<artifactId>spring-ai-tika-document-reader</artifactId>
 			<version>1.0.0-M3</version>
 		</dependency>
-	</dependencies>
+		<!-- 发送邮件所需依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!--使用Thymeleaf模板引擎（邮件发送模板）-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+    </dependencies>
 
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>

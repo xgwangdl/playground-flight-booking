@@ -1,9 +1,8 @@
 package ai.spring.demo.ai.playground.controller;
 
-import ai.spring.demo.ai.playground.javaAssistant.JavaAssistant;
+import ai.spring.demo.ai.playground.javaInterview.JavaAssistant;
 import lombok.SneakyThrows;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
